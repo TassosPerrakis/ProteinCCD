@@ -1,0 +1,62 @@
+<project name="CrystConDesigner" default="package" basedir=".">
+    <description>
+        Building (and signing) the CCD applet code.
+    </description>
+  <!-- set global properties for this build -->
+  <property name="src" location="crystConDesigner"/>
+  <property name="build" location="build"/>
+  <property name="dist"  location="dist"/>
+  <property name="lib" location="lib"/>
+  <property name="jarfile" location="${dist}/${ant.project.name}.jar"/>
+  <property name="compile.debug" value="true"/>
+
+  <!-- Trying to get 'automatic' binding to any lib in the 'lib' directory : -->
+  <fileset id="lib.jars" dir="${lib}">
+    <include name="**/*.jar"/>
+  </fileset>
+  <path id="lib.path">
+    <fileset refid="lib.jars"/>
+  </path>
+
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build}"/>
+  </target>
+
+  <target name="compile" depends="init"
+	  description="compile the source " >
+    <!-- Compile the java code from ${src} into ${build} : making sure we keep (as much as possible) 1.1 compatibility : -->
+    <javac srcdir="${src}" destdir="${build}"                
+	   source="1.3" target="1.3"
+	   includeAntRuntime="no"
+	   classpathref="lib.path" debug="${compile.debug}"/>
+  </target>
+  
+  <target name="package" depends="compile"
+	  description="generate the jar package" >
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}"/>
+    
+    <!-- Put everything in ${build} into the ${jarfile} file -->
+    <jar jarfile="${jarfile}" basedir="${build}" />
+    <!-- Also copy the library/ies jars into final destination directory -->
+    <copy todir="${dist}" preservelastmodified="true">
+      <fileset refid="lib.jars" />
+    </copy>
+  </target>
+  
+  <target name="signing" depends="package" 
+	  description="Sign the created jar file" >
+    <signjar storepass="ATrivialPassWordForThisStore" jar="${jarfile}" alias="xtal.nki.nl" keystore="KeyStore.local" keypass="anasta123+nog1_software" />
+  </target>
+  
+  <target name="clean"
+	  description="clean up" >
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+</project>

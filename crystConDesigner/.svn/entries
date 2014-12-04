@@ -1,0 +1,40 @@
+8
+
+dir
+441
+https://pear:4000/svn/LIMS/CCD/trunk/crystConDesigner
+https://pear:4000/svn/LIMS
+
+
+
+2009-03-31T19:30:37.287489Z
+441
+xwijnand
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+c5edff64-3bf4-0310-8cf3-d1202499c381
+
+CrystConDesignerApplet.java
+file
+
+
+
+
+2009-04-01T08:43:18.000000Z
+116cd78e36ab0ae6d9d177ea2161d9c5
+2009-03-31T19:30:37.287489Z
+441
+xwijnand
+
