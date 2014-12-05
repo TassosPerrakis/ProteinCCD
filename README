@@ -1,0 +1,4 @@
+javac CrystConDesignerApplet.java
+jar cvf CrystConDesigner.jar crystConDesigner/*class
+jarsigner -keystore keystore.jks CrystConDesigner.jar server  
+
